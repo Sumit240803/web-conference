@@ -12,11 +12,15 @@ const Conference = () => {
 
   useEffect(() => {
     const getMedia = async () => {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      localVideoRef.current.srcObject = mediaStream;
-      setStream(mediaStream);
+      try {
+        const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        localVideoRef.current.srcObject = mediaStream;
+        setStream(mediaStream);
+      } catch (err) {
+        console.error("Error accessing media devices:", err);
+      }
     };
-    
+
     getMedia();
 
     // Set up socket listeners
@@ -33,6 +37,11 @@ const Conference = () => {
   }, []);
 
   const handleOffer = async (offer) => {
+    if (!stream) {
+      console.error("Media stream is not available");
+      return;
+    }
+
     const peerConnection = new RTCPeerConnection();
     setPeerConnection(peerConnection); // Store peerConnection for reuse
 
@@ -79,6 +88,11 @@ const Conference = () => {
   };
 
   const callUser = async () => {
+    if (!stream) {
+      console.error("Media stream is not available");
+      return;
+    }
+
     const peerConnection = new RTCPeerConnection();
     setPeerConnection(peerConnection); // Store peerConnection for reuse
 
