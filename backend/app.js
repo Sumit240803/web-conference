@@ -5,7 +5,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
-      origin: "http://localhost:3000",  // Allow your frontend URL here
+      origin: "https://web-conference-liard.vercel.app/",  // Allow your frontend URL here
       methods: ["GET", "POST"],
       allowedHeaders: ["Content-Type"], // Specify headers if needed
       credentials: true, // Allow credentials like cookies if required
@@ -13,7 +13,7 @@ const io = socketIo(server, {
   });
 const cors = require("cors");
 app.use(cors({
-    origin: "http://localhost:3000", // Allow your frontend URL here
+    origin: "https://web-conference-liard.vercel.app/", // Allow your frontend URL here
     methods: ["GET", "POST"],
     credentials: true,
   }));
